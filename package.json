@@ -11,5 +11,13 @@
     "url": "git://github.com/AhiVelasquez/Random-Quote-Machine.git"
   },
   "author": "Paola Guarasci",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "browser-sync": "^2.14.0",
+    "browserify": "^13.1.0",
+    "gulp": "^3.9.1",
+    "gulp-htmlmin": "^2.0.0",
+    "gulp-sass": "^2.3.2",
+    "uglify": "^0.1.5"
+  }
 }
