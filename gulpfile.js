@@ -22,14 +22,31 @@ var destPath        = {
                         "prod": "build/production/"
                       };
 
-var destinazione, htmlCollapse, scope = process.env.NODE_ENV || "dev";
+var destinazione,
+    htmlCollapse,
+    uglifyOpt,
+    scope = process.env.NODE_ENV || "dev";
 
 if ( scope === "dev") {
   destinazione = destPath.dev;
   htmlCollapse = false;
+  uglifyOpt = {
+                mangle: false,
+                compress: false,
+                output: {
+                  beautify: true
+                }
+              };
 } else {
   destinazione = destPath.prod;
   htmlCollapse = true;
+  uglifyOpt = {
+    mangle: true,
+    compress: true,
+    output: {
+      beautify: false
+    }
+  };
 }
 
 // HTML Minify and inject into browser
@@ -61,7 +78,9 @@ gulp.task('sass', function() {
 // JS
 gulp.task('js', function(){
   gulp.src(sourcePath.js)
-      .pipe(uglify())
+      .pipe(uglify(
+        uglifyOpt
+      ))
       .pipe(gulp.dest(destinazione + "js"))
       .pipe(browserSync.stream());
 });
