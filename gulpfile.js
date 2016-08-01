@@ -22,7 +22,7 @@ var destPath        = {
                         "prod": "build/production/"
                       };
 
-var destinazione, htmlCollapse, scope = "dev";
+var destinazione, htmlCollapse, scope = process.env.NODE_ENV || "dev";
 
 if ( scope === "dev") {
   destinazione = destPath.dev;
