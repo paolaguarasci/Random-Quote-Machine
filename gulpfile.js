@@ -1,8 +1,11 @@
-var gulp        = require('gulp');
-var browserSync = require('browser-sync').create();
-var sass        = require('gulp-sass');
-var htmlmin     = require('gulp-htmlmin');
-
+var gulp            = require('gulp');
+var browserSync     = require('browser-sync').create();
+var sass            = require('gulp-sass');
+var htmlmin         = require('gulp-htmlmin');
+var autoprefixer    = require('gulp-autoprefixer');
+var concat          = require('gulp-concat');
+var rename          = require('gulp-rename');
+var css             = require('gulp-clean-css');
 
 // Vaariabili custom
 var sourcePath = {
@@ -19,7 +22,7 @@ var destPath = {
 };
 
 var destinazione;
-var scope = "prod";
+var scope = "dev";
 var htmlCollapse;
 if ( scope === "dev") {
   destinazione = destPath.dev;
@@ -37,6 +40,16 @@ gulp.task('html', function() {
     .pipe(browserSync.stream());
 });
 
+// CSS Minify, concat and inject into browser
+gulp.task('css', function(){
+  gulp.src(sourcePath.css)
+      .pipe(css())
+      .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
+      .pipe(concat('style.css'))
+      .pipe(gulp.dest(destinazione + 'css'))
+      .pipe(browserSync.stream());
+});
+
 // Static Server + watching scss/html files
 gulp.task('serve', ['sass'], function() {
 
@@ -45,6 +58,7 @@ gulp.task('serve', ['sass'], function() {
     });
 
     gulp.watch(sourcePath.sass, ['sass']);
+    gulp.watch(sourcePath.css, ['css']);
     gulp.watch(sourcePath.html, ['html']).on('change', browserSync.reload);
 });
 
@@ -56,5 +70,5 @@ gulp.task('sass', function() {
         .pipe(browserSync.stream());
 });
 
-gulp.task('default', ['serve', 'html']);
+gulp.task('default', ['serve', 'html', 'css']);
 gulp.task('prod', ['serve', 'html']);
