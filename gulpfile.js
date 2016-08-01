@@ -7,6 +7,9 @@ var concat          = require('gulp-concat');
 var rename          = require('gulp-rename');
 var css             = require('gulp-clean-css');
 var uglify          = require('gulp-uglify');
+var imageop         = require('gulp-image-optimization');
+var imagePNG        = require('imagemin-pngquant');
+var imageJPG        = require('imagemin-mozjpeg');
 
 // Vaariabili custom
 var sourcePath      = {
@@ -88,7 +91,16 @@ gulp.task('js', function(){
 // Img
 gulp.task('img', function(){
   gulp.src(sourcePath.img)
-
+      .pipe(imageop({
+          //optimizationLevel: 5,
+          //progressive: true,
+          //interlaced: true,
+          plugins: [
+            imageJPG(),
+            imagePNG({quality: '10'})
+          ]
+      }))
+      .pipe(gulp.dest(destinazione + "img"))
       .pipe(browserSync.stream());
 });
 
