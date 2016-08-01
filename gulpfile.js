@@ -6,24 +6,24 @@ var autoprefixer    = require('gulp-autoprefixer');
 var concat          = require('gulp-concat');
 var rename          = require('gulp-rename');
 var css             = require('gulp-clean-css');
+var uglify          = require('gulp-uglify');
 
 // Vaariabili custom
-var sourcePath = {
-  "css":  "src/css/**/*.css",
-  "js": "src/js/**/*.js",
-  "img": "src/img/*.*",
-  "sass": "src/sass/**/*.scss",
-  "html": "src/*.html"
-};
+var sourcePath      = {
+                        "css" :  "src/css/**/*.css",
+                        "js"  : "src/js/**/*.js",
+                        "img" : "src/img/*.*",
+                        "sass": "src/sass/**/*.scss",
+                        "html": "src/*.html"
+                      };
 
-var destPath = {
-  "dev": "build/dev/",
-  "prod": "build/production/"
-};
+var destPath        = {
+                        "dev" : "build/dev/",
+                        "prod": "build/production/"
+                      };
 
-var destinazione;
-var scope = "dev";
-var htmlCollapse;
+var destinazione, htmlCollapse, scope = "dev";
+
 if ( scope === "dev") {
   destinazione = destPath.dev;
   htmlCollapse = false;
@@ -31,8 +31,8 @@ if ( scope === "dev") {
   destinazione = destPath.prod;
   htmlCollapse = true;
 }
-// HTML Minify and inject into browser
 
+// HTML Minify and inject into browser
 gulp.task('html', function() {
   return gulp.src(sourcePath.html)
     .pipe(htmlmin({collapseWhitespace: htmlCollapse}))
@@ -50,8 +50,31 @@ gulp.task('css', function(){
       .pipe(browserSync.stream());
 });
 
-// Static Server + watching scss/html files
-gulp.task('serve', ['sass'], function() {
+// SASS compilato & auto-inject into browsers
+gulp.task('sass', function() {
+    return gulp.src(sourcePath.sass)
+        .pipe(sass())
+        .pipe(gulp.dest(destinazione + "css"))
+        .pipe(browserSync.stream());
+});
+
+// JS
+gulp.task('js', function(){
+  gulp.src(sourcePath.js)
+      .pipe(uglify())
+      .pipe(gulp.dest(destinazione + "js"))
+      .pipe(browserSync.stream());
+});
+
+// Img
+gulp.task('img', function(){
+  gulp.src(sourcePath.img)
+
+      .pipe(browserSync.stream());
+});
+
+// Server + watching
+gulp.task('server', ['sass'], function() {
 
     browserSync.init({
         server: destinazione
@@ -59,16 +82,10 @@ gulp.task('serve', ['sass'], function() {
 
     gulp.watch(sourcePath.sass, ['sass']);
     gulp.watch(sourcePath.css, ['css']);
+    gulp.watch(sourcePath.js, ['js']);
+    gulp.watch(sourcePath.img, ['img']);
     gulp.watch(sourcePath.html, ['html']).on('change', browserSync.reload);
 });
 
-// Compile sass into CSS & auto-inject into browsers
-gulp.task('sass', function() {
-    return gulp.src(sourcePath.sass)
-        .pipe(sass())
-        .pipe(gulp.dest(destinazione + "/css"))
-        .pipe(browserSync.stream());
-});
-
-gulp.task('default', ['serve', 'html', 'css']);
-gulp.task('prod', ['serve', 'html']);
+gulp.task('default', ['server', 'html', 'css', 'js', 'img']);
+gulp.task('prod', ['server', 'html','css']);
