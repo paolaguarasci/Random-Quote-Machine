@@ -1,3 +1,9 @@
+// TODO:
+// Integrazione con Bower
+// Clean
+
+
+
 var gulp            = require('gulp');
 var browserSync     = require('browser-sync').create();
 var sass            = require('gulp-sass');
@@ -10,10 +16,15 @@ var uglify          = require('gulp-uglify');
 var imageop         = require('gulp-image-optimization');
 var imagePNG        = require('imagemin-pngquant');
 var imageJPG        = require('imagemin-mozjpeg');
+var wiredep         = require('gulp-wiredep');
+var mainBowerFiles  = require('main-bower-files');
+var gulpFilter      = require('gulp-filter');
+var browserify      = require('gulp-browserify');
+
 
 // Vaariabili custom
 var sourcePath      = {
-                        "css" :  "src/css/**/*.css",
+                        "css" : "src/css/**/*.css",
                         "js"  : "src/js/**/*.js",
                         "img" : "src/img/*.*",
                         "sass": "src/sass/**/*.scss",
@@ -81,9 +92,9 @@ gulp.task('sass', function() {
 // JS
 gulp.task('js', function(){
   gulp.src(sourcePath.js)
-      .pipe(uglify(
-        uglifyOpt
-      ))
+      .pipe(browserify())
+      .pipe(concat('script.js'))
+      .pipe(uglify(uglifyOpt))
       .pipe(gulp.dest(destinazione + "js"))
       .pipe(browserSync.stream());
 });
@@ -92,12 +103,12 @@ gulp.task('js', function(){
 gulp.task('img', function(){
   gulp.src(sourcePath.img)
       .pipe(imageop({
-          //optimizationLevel: 5,
-          //progressive: true,
-          //interlaced: true,
+          optimizationLevel: 5,
+          progressive: true,
+          interlaced: true,
           plugins: [
             imageJPG(),
-            imagePNG({quality: '10'})
+            imagePNG({quality: '85'})
           ]
       }))
       .pipe(gulp.dest(destinazione + "img"))

@@ -12,3 +12,5 @@
 // Trigger sul pulsante per generare una nuova citazione
 // Pulsanti di condivisione che "inviano" la citazione
 // Stampa dell'elemento con id X (generato casualmente)
+require('jquery');
+alert("Test!!!");
