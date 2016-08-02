@@ -5622,7 +5622,6 @@
     }, {} ],
     2: [ function(require, module, exports) {
         require("jquery");
-        alert("Test!!!");
     }, {
         jquery: 1
     } ]

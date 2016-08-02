@@ -8,11 +8,21 @@ TODO
     - Pulsante "Nuova citazione" (stesso colore dello sfondo)
 - Font Utilizzato: ???
 */
-
-h1 {
-  color: red;
+body {
+  background-color: red; // Dinamico con JS
+}
+.citazione {
+  max-width: 65%;
+  margin: 0 auto;
+  margin-top: 25vh;
+  border-radius: 5px;
+  background-color: white;
+  padding: 25px;
 }
 
-img {
-  max-width: 100%;
+.coloreDinamico{
+  color: red; // Dinamico con JS
+}
+.fa {
+  padding: 0 10px 0 0;
 }
