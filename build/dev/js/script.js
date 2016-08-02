@@ -5626,7 +5626,7 @@
             var min = 0;
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
-        $(document).ready(function() {
+        function nuovaCitazione() {
             $.getJSON("js/data.json", function(json) {
                 var icon = '<i class="fa fa-quote-left fa-3x fa-pull-left coloreDinamico" aria-hidden="true"></i>';
                 var cit = icon + "";
@@ -5638,6 +5638,10 @@
                 $("#cit").html(cit);
                 $("#autore").html(autore);
             });
+        }
+        nuovaCitazione();
+        $("#newCit").click(function() {
+            nuovaCitazione();
         });
     }, {
         jquery: 1
