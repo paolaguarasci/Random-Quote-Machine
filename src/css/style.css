@@ -26,3 +26,8 @@ background-color:  red; // Dinamico con JS
 .fa {
   padding: 0 10px 0 0;
 }
+
+button:hover,
+a i:hover{
+  color: rgba(255, 0, 0, 0.5);;
+}

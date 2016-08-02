@@ -5632,11 +5632,14 @@
                 var cit = icon + "";
                 var autore = "- ";
                 var id = idRandom(10);
-                console.lod = id;
+                var twitter = "http://www.twitter.com/intent/tweet?text=" + json[id].testo + " (" + json[id].autore + ")";
+                var tumblr = "http://www.tumblr.com";
                 cit += json[id].testo;
                 autore += json[id].autore;
                 $("#cit").html(cit);
                 $("#autore").html(autore);
+                $(".twitter").prop("href", twitter);
+                $(".tumblr").prop("href", tumblr);
             });
         }
         nuovaCitazione();
