@@ -1,29 +1,8 @@
 // TODO
-//  - Colore di sfondo dinamico (random) inserito come proprietà dell'oggetto;
-//  - Il cambio di colore avvine lentamente (fade in-out);
-//  - Icone di tumblr e twitter e pulsante "Nuova citazione" dello stesso colore dello sfondo;
+// Animazione fadeIn
+// Pulsante Tumblr non richiesto -.- (serve ApiKey u.u)
 
-// --- PSEUDOCODE ---
-// Parse del JSON
-// Generazione di un numero casuale tra 1 e "lunghezza JSON"
-// Cambio dinamico del colore dei pulsanti
-// Cambio dinamico del colore dello sfondo
-// Cambio dinamico del colore delle icona
-// Trigger sul pulsante per generare una nuova citazione
-// Pulsanti di condivisione che "inviano" la citazione
-// Stampa dell'elemento con id X (generato casualmente)
 var $ = require('jquery');
-// jQuery.Color( "#229911" );
-// jQuery.Color( "rgb(100,200,255)" );
-// jQuery.Color( "rgba(100,200,255,0.5)" );
-// jQuery.Color( "aqua" );
-// $(".coloreDinamico").animate(({backgroundColor: jQuery.Color()}), 1500 );
-
-
-// $("#newCit").click(function(){
-//   $(".coloreDinamico").animate(({backgroundColor: jQuery.Color({ saturation: 50 })}), 1500 );
-//
-// });
 
 function idRandom(max) {
   var min = 0;
@@ -36,21 +15,25 @@ function nuovaCitazione () {
     var cit = icon + '';
     var autore = '- ';
     var id = idRandom(10);
+    var sfondo = idRandom(10);
     var twitter = 'http://www.twitter.com/intent/tweet?text=' + json[id].testo + ' (' + json[id].autore + ')';
     var tumblr = 'http://www.tumblr.com';
 
     cit += json[id].testo;
     autore += json[id].autore;
 
-    $("#cit").html(cit);
-    $("#autore").html(autore);
-    $(".twitter").prop("href", twitter);
-    $(".tumblr").prop("href", tumblr);
+    $("#cit").html(cit).fadeIn("slow");
+    $("#autore").html(autore).fadeIn("slow");
+    $(".twitter").prop("href", twitter).fadeIn("slow");
+    $(".tumblr").prop("href", tumblr).fadeIn("slow");
+    $(".coloreDinamico").css("color", json[sfondo].colore );
+    $("body").css("background-color", json[sfondo].colore );
   });
 }
 
 nuovaCitazione();
-
-$( "#newCit" ).click(function() {
-  nuovaCitazione();
+$(document).ready(function(){
+  $( "#newCit" ).click(function() {
+    nuovaCitazione();
+  });
 });

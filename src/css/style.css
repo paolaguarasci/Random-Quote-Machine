@@ -1,15 +1,10 @@
 /*
-TODO
-- Icona delle virgolette ad inizio del testo (<p>).
-- Colore di: (se ne occupa il JS)
-    - Sfondo (da JSON)
-    - Icona di tumblr (stesso colore dello sfondo)
-    - Icona di twitter (stesso colore dello sfondo)
-    - Pulsante "Nuova citazione" (stesso colore dello sfondo)
-- Font Utilizzato: ???
+* TODO
+* ---
 */
+
 body {
-background-color:  red; // Dinamico con JS
+  background-color:  red; // Dinamico con JS
 }
 .citazione {
   max-width: 65%;
@@ -30,4 +25,7 @@ background-color:  red; // Dinamico con JS
 button:hover,
 a i:hover{
   color: rgba(255, 0, 0, 0.5);;
+}
+#autore {
+  font-style: italic;
 }

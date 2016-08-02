@@ -5632,19 +5632,24 @@
                 var cit = icon + "";
                 var autore = "- ";
                 var id = idRandom(10);
+                var sfondo = idRandom(10);
                 var twitter = "http://www.twitter.com/intent/tweet?text=" + json[id].testo + " (" + json[id].autore + ")";
                 var tumblr = "http://www.tumblr.com";
                 cit += json[id].testo;
                 autore += json[id].autore;
-                $("#cit").html(cit);
-                $("#autore").html(autore);
-                $(".twitter").prop("href", twitter);
-                $(".tumblr").prop("href", tumblr);
+                $("#cit").html(cit).fadeIn("slow");
+                $("#autore").html(autore).fadeIn("slow");
+                $(".twitter").prop("href", twitter).fadeIn("slow");
+                $(".tumblr").prop("href", tumblr).fadeIn("slow");
+                $(".coloreDinamico").css("color", json[sfondo].colore);
+                $("body").css("background-color", json[sfondo].colore);
             });
         }
         nuovaCitazione();
-        $("#newCit").click(function() {
-            nuovaCitazione();
+        $(document).ready(function() {
+            $("#newCit").click(function() {
+                nuovaCitazione();
+            });
         });
     }, {
         jquery: 1
