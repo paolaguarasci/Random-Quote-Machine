@@ -15,6 +15,7 @@
   "devDependencies": {
     "browser-sync": "^2.14.0",
     "browserify": "^13.1.0",
+    "browserify-shim": "^3.8.12",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-browserify": "^0.5.1",
@@ -25,6 +26,8 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.3.2",
     "gulp-uglify": "^1.5.4",
+    "jquery": "^3.1.0",
+    "jquery-color": "^1.0.0",
     "uglify": "^0.1.5"
   },
   "dependencies": {
@@ -35,7 +38,16 @@
     "imagemin-mozjpeg": "^6.0.0",
     "imagemin-pngcrush": "^5.0.0",
     "imagemin-pngquant": "^5.0.0",
+    "jquery-color": "^1.0.0",
     "main-bower-files": "^2.13.1",
     "wiredep": "^4.0.0"
+  },
+  "browserify-shim": {
+    "jquery": "$"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
   }
 }

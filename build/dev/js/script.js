@@ -5621,7 +5621,24 @@
         });
     }, {} ],
     2: [ function(require, module, exports) {
-        require("jquery");
+        var $ = require("jquery");
+        function idRandom(max) {
+            var min = 0;
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        $(document).ready(function() {
+            $.getJSON("js/data.json", function(json) {
+                var icon = '<i class="fa fa-quote-left fa-3x fa-pull-left coloreDinamico" aria-hidden="true"></i>';
+                var cit = icon + "";
+                var autore = "- ";
+                var id = idRandom(10);
+                console.lod = id;
+                cit += json[id].testo;
+                autore += json[id].autore;
+                $("#cit").html(cit);
+                $("#autore").html(autore);
+            });
+        });
     }, {
         jquery: 1
     } ]
